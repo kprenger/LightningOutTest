@@ -33,7 +33,7 @@
         } else if (clientId !== '' && clientSecret !== '' && code !== null) {
           getAuthToken(code, clientId, clientSecret);
         } else if (authToken !== null && recordId !== '') {
-          addAccount();
+          addAccount(recordId);
         }
       };
       
@@ -130,6 +130,6 @@
     <br>
     <br>
     <br>
-    v17
+    v18
   </body>
 </html>
