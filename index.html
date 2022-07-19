@@ -11,6 +11,8 @@
         if (code !== null) {
           document.getElementById("consumer_secret_block").style.display = "block";
           document.getElementById("log_in").value = 'Log in';
+          
+          document.getElementById("step_title").innerHTML = 'Step 2: Getting auth token';
         }
       }
       
@@ -64,7 +66,8 @@
             document.getElementById("consumer_key").value = '';
             document.getElementById("consumer_secret").value = '';
             
-            document.getElementById("log_in").value = 'Get Lightning Component for Account';
+            document.getElementById("log_in").value = 'Add Account';
+            document.getElementById("step_title").innerHTML = 'Step 3: Inserting Lightning Component for Accounts';
           }
         }).catch(function (err) {
           console.log('something went wrong', err);
@@ -101,6 +104,8 @@
   </head>
   <body>
     <h1>Lightning Out Test</h1>
+    
+    <h3 id="step_title">Step 1: Authorizing SF access</h3>
 
     <div id="client_id_block">
       Enter Client ID<br>
@@ -125,6 +130,6 @@
     <br>
     <br>
     <br>
-    v16
+    v17
   </body>
 </html>
