@@ -1,29 +1,49 @@
+<!-- document.getElementById("replaceMe").innerHTML = "Access code: " + code; -->
+
 <html>
   <head>
     <script>
-      function checkForCode() {
-        let params = (new URL(document.location)).searchParams;
-        let code = params.get("code");
-        
-        if (code !== null) {
-          document.getElementById("replaceMe").innerHTML = "Access code: " + code;
-        }
-      };
-      
       function doLogin() {
         let clientId = document.getElementById("consumer_key").value;
         let clientSecret = document.getElementById("consumer_secret").value;
         
-        if (clientId === null || clientSecret === null) { return; }
+        let params = (new URL(document.location)).searchParams;
+        let code = params.get("code");
         
-        let url = 'https://visioncare--devkpren.my.salesforce.com/services/oauth2/authorize?client_id=';
-        url += clientId;
-        url += '&redirect_uri=https%3A%2F%2Fkprenger.github.io%2FLightningOutTest&response_type=code';
+        if (clientId !== '' && code === null) { 
+          let url = 'https://visioncare--devkpren.my.salesforce.com/services/oauth2/authorize?client_id=';
+          url += clientId;
+          url += '&redirect_uri=https%3A%2F%2Fkprenger.github.io%2FLightningOutTest&response_type=code';
         
-        window.location.replace(url);
-      }; 
+          window.location.replace(url);
+        } else if (clientId !== '' && clientSecret !== '' && code !== null) {
+          getAuthToken(code, clientId, clientSecret);
+        }
+      };
       
-      window.onload = checkForCode;
+      function getAuthToken(code, clientId, clientSecret) {
+        let bodyString = 'grant_type=authorization_code&code=';
+        bodyString += code;
+        bodyString += '&client_id=';
+        bodyString += clientId;
+        bodyString += '&client_secret=';
+        bodyString += clientSecret;
+        bodyString += '&redirect_uri=https://kprenger.github.io/LightningOutTest';
+        
+        fetch('https://visioncare--devkpren.my.salesforce.com/services/oauth2/token', {
+          method: 'POST',
+          body: bodyString,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        }).then(function (resp) {
+          return resp.json();
+        }).then(function (data) {
+          console.log('token', data);
+        }).catch(function (err) {
+          console.log('something went wrong', err);
+        });
+      }
     </script>
   </head>
   <body>
