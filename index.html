@@ -2,6 +2,8 @@
   <head>
     <script src="https://visioncare--devkpren.my.salesforce.com/lightning/lightning.out.js"></script>
     <script>
+      let authToken;
+      
       function pageSetup() {
         let params = (new URL(document.location)).searchParams;
         let code = params.get("code");
@@ -47,24 +49,32 @@
         }).then(function (resp) {
           return resp.json();
         }).then(function (data) {
-          let authToken = data.access_token;
+          authToken = data.access_token;
           
           if (authToken !== null) {
             document.getElementById("lightningComponent").style.display = "block";
+            document.getElementById("add_account").style.display = "block";
+            document.getElementById("loading_message").style.display = "block";
             
+            document.getElementById("log_in").style.display = "none";
+
             document.getElementById("consumer_key").value = '';
             document.getElementById("consumer_secret").value = '';
             
-            let recordId = document.getElementById("account_id").value;
-            
-            insertLightning(authToken, recordId);
+            insertLightning();
           }
         }).catch(function (err) {
           console.log('something went wrong', err);
         });
       }
       
-      function insertLightning(authToken, recordId) {
+      function addAccount() {
+        insertLightning();
+      }
+      
+      function insertLightning() {
+        let recordId = document.getElementById("account_id").value;
+        
         $Lightning.use(
           "c:JJVC_AccountsCustomerStrategyRelatedListApp_LUPG", 
           function() {
@@ -73,7 +83,7 @@
               { recordId: recordId, },
               "lightningComponent",
               function(cmp) {
-                console.log("LWC component was created");
+                document.getElementById("loading_message").style.display = "none";
               }
             );
           },
@@ -99,13 +109,15 @@
       <input type="text" id="account_id" name="account_id" value="001S0000012Cv16IAC"><br><br>
     </div>
 
+    <input id="add_account" type="button" value="Add Account" onclick="addAccount();" style="display: none" />
     <input id="log_in" type="button" value="Log in" onclick="doLogin();" /><br><br>
 
-    <div id="lightningComponent" style="display: none">Lightning Component Loading</div>
+    <div id="lightningComponent" style="display: none"></div>
+    <div id="loading_message" style="display: none">Lightning Component Loading</div>
     
     <br>
     <br>
     <br>
-    v11
+    v12
   </body>
 </html>
