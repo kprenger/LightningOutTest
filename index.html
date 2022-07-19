@@ -10,8 +10,6 @@
         
         if (code !== null) {
           document.getElementById("consumer_secret_block").style.display = "block";
-          document.getElementById("account_id_block").style.display = "block";
-          
           document.getElementById("log_in").value = 'Log in';
         }
       }
@@ -55,8 +53,7 @@
           authToken = data.access_token;
           
           if (authToken !== null) {
-            document.getElementById("lightningComponent").style.display = "block";
-            document.getElementById("loading_message").style.display = "block";
+            document.getElementById("account_id_block").style.display = "block";
             
             document.getElementById("client_id_block").style.display = "none";
             document.getElementById("consumer_secret_block").style.display = "none";
@@ -72,6 +69,9 @@
       }
       
       function addAccount() {
+        document.getElementById("lightningComponent").style.display = "block";
+        document.getElementById("loading_message").style.display = "block";
+        
         insertLightning();
       }
       
@@ -124,6 +124,6 @@
     <br>
     <br>
     <br>
-    v14
+    v15
   </body>
 </html>
