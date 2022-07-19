@@ -2,6 +2,17 @@
   <head>
     <script src="https://visioncare--devkpren.my.salesforce.com/lightning/lightning.out.js"></script>
     <script>
+      function pageSetup() {
+        let params = (new URL(document.location)).searchParams;
+        let code = params.get("code");
+        
+        if (code !== null) {
+          document.getElementById("consumer_secret_block").style.display = "block";
+        }
+      }
+      
+      window.onLoad = pageSetup;
+      
       function doLogin() {
         let clientId = document.getElementById("consumer_key").value;
         let clientSecret = document.getElementById("consumer_secret").value;
@@ -41,6 +52,7 @@
           let authToken = data.access_token;
           
           if (authToken !== null) {
+            document.getElementById("lightningComponent").style.display = "block";
             insertLightning(authToken);
           }
         }).catch(function (err) {
@@ -74,18 +86,19 @@
 
     Enter Client ID<br>
     <input type="text" id="consumer_key" name="consumer_key"><br><br>
-    
-    Enter Consumer Secret<br>
-    <input type="text" id="consumer_secret" name="consumer_secret"><br><br>
 
-    <input id="clickMe" type="button" value="Log in" onclick="doLogin();" />
+    <div id="consumer_secret_block" style="display: none">
+      Enter Consumer Secret<br>
+      <input type="text" id="consumer_secret" name="consumer_secret"><br><br>
+    </div>
 
-    <br>The lightning component should appear below if this works.<br><br>
-    <div id="lightningComponent"></div>
+    <input id="clickMe" type="button" value="Log in" onclick="doLogin();" /><br><br>
+
+    <div id="lightningComponent" style="display: none">Lightning Component Loading</div>
     
     <br>
     <br>
     <br>
-    v5
+    v6
   </body>
 </html>
