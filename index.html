@@ -11,8 +11,6 @@
         }
       }
       
-      window.onLoad = pageSetup;
-      
       function doLogin() {
         let clientId = document.getElementById("consumer_key").value;
         let clientSecret = document.getElementById("consumer_secret").value;
@@ -81,7 +79,7 @@
       }
     </script>
   </head>
-  <body>
+  <body onload="pageSetup">
     <h1>Lightning Out Test</h1>
 
     Enter Client ID<br>
@@ -99,6 +97,6 @@
     <br>
     <br>
     <br>
-    v6
+    v7
   </body>
 </html>
