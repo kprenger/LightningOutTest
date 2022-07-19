@@ -1,18 +1,41 @@
-<script>
-  function startTheThing() {
-    let params = (new URL(document.location)).searchParams;
-    let code = params.get("code");
-    document.getElementById("replaceMe").innerHTML = "Access code: " + code;
-  }; 
-</script>
+<html>
+  <head>
+    <script>
+      function checkForCode() {
+        let params = (new URL(document.location)).searchParams;
+        let code = params.get("code");
+        
+        if (code !== null) {
+          document.getElementById("replaceMe").innerHTML = "Access code: " + code;
+        }
+      };
+      
+      function doLogin() {
+        let clientId = document.getElementById("consumer_key").value;
+        let clientSecret = document.getElementById("consumer_secret").value;
+        
+        if (clientId === null || clientSecret === null) { return; }
+        
+        let url = 'https://visioncare--devkpren.my.salesforce.com/services/oauth2/authorize?client_id=';
+        url += clientId;
+        url += '&redirect_uri=https%3A%2F%2Fkprenger.github.io%2FLightningOutTest&response_type=code';
+        
+        window.location.replace(url);
+      }; 
+      
+      window.onload = checkForCode;
+    </script>
+  </head>
+  <body>
+    <h1>Lightning Out Test</h1>
 
-<h1>Lightning Out Test</h1>
+    <input type="text" id="consumer_key" name="consumer_key"><br><br>
+    <input type="text" id="consumer_secret" name="consumer_secret"><br><br>
 
-<input type="text" id="consumer_key" name="consumer_key"><br><br>
-<input type="text" id="consumer_secret" name="consumer_secret"><br><br>
+    <input id="clickMe" type="button" value="Log in" onclick="doLogin();" />
 
-<input id="clickMe" type="button" value="clickme" onclick="startTheThing();" />
-
-<div id="replaceMe">
-  This will be replaced.
-</div>
+    <div id="replaceMe">
+      This will be replaced.
+    </div>
+  </body>
+</html>
