@@ -40,8 +40,6 @@
         }).then(function (data) {
           let authToken = data.access_token;
           
-          console.log(authToken);
-          
           if (authToken !== null) {
             insertLightning(authToken);
           }
@@ -53,18 +51,20 @@
       function insertLightning(authToken) {
         let recordId = '001S0000012Cv16IAC';
 
-        $Lightning.use("c:JJVC_AccountsCustomerStrategyRelatedListApp_LUPG", function() {
-          $Lightning.createComponent(
-            "c:JJVC_AccountsCustomerStrategyRelatedList_LUPG",
-            { recordId: recordId, },
-            "lightningComponent",
-            function(cmp) {
-              console.log("LWC component was created");
-            }
-          );
-        },
-        'https://visioncare--devkpren.lightning.force.com/',
-        authToken
+        $Lightning.use(
+          "c:JJVC_AccountsCustomerStrategyRelatedListApp_LUPG", 
+          function() {
+            $Lightning.createComponent(
+              "c:JJVC_AccountsCustomerStrategyRelatedList_LUPG",
+              { recordId: recordId, },
+              "lightningComponent",
+              function(cmp) {
+                console.log("LWC component was created");
+              }
+            );
+          },
+          'https://visioncare--devkpren.lightning.force.com/',
+          authToken
         );
       }
     </script>
@@ -72,18 +72,20 @@
   <body>
     <h1>Lightning Out Test</h1>
 
-    Enter Client ID
+    Enter Client ID<br>
     <input type="text" id="consumer_key" name="consumer_key"><br><br>
     
-    Enter Consumer Secret
+    Enter Consumer Secret<br>
     <input type="text" id="consumer_secret" name="consumer_secret"><br><br>
 
     <input id="clickMe" type="button" value="Log in" onclick="doLogin();" />
 
-    <div id="lightning">
-      This will be replaced.
-    </div>
+    <br>The lightning component should appear below if this works.<br><br>
+    <div id="lightningComponent"></div>
     
-    v4
+    <br>
+    <br>
+    <br>
+    v5
   </body>
 </html>
