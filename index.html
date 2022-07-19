@@ -1,6 +1,8 @@
 <script>
   setTimeout(() => {
-    document.getElementById("replaceMe").innerHTML = "I have replaced it.";
+    let params = (new URL(document.location)).searchParams;
+    let code = params.get("code");
+    document.getElementById("replaceMe").innerHTML = "Access code: " + code;
   }, 2000); 
 </script>
 
