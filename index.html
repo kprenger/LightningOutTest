@@ -1,7 +1,6 @@
-<!-- document.getElementById("replaceMe").innerHTML = "Access code: " + code; -->
-
 <html>
   <head>
+    <script src="https://visioncare--devkpren.my.salesforce.com/lightning/lightning.out.js"></script>
     <script>
       function doLogin() {
         let clientId = document.getElementById("consumer_key").value;
@@ -39,23 +38,52 @@
         }).then(function (resp) {
           return resp.json();
         }).then(function (data) {
-          console.log('token', data);
+          let authToken = data.access_token;
+          
+          console.log(authToken);
+          
+          if (authToken !== null) {
+            insertLightning(authToken);
+          }
         }).catch(function (err) {
           console.log('something went wrong', err);
         });
+      }
+      
+      function insertLightning(authToken) {
+        let recordId = '001S0000012Cv16IAC';
+
+        $Lightning.use("c:JJVC_AccountsCustomerStrategyRelatedListApp_LUPG", function() {
+          $Lightning.createComponent(
+            "c:JJVC_AccountsCustomerStrategyRelatedList_LUPG",
+            { recordId: recordId, },
+            "lightningComponent",
+            function(cmp) {
+              console.log("LWC component was created");
+            }
+          );
+        },
+        'https://visioncare--devkpren.lightning.force.com/',
+        authToken
+        );
       }
     </script>
   </head>
   <body>
     <h1>Lightning Out Test</h1>
 
+    Enter Client ID
     <input type="text" id="consumer_key" name="consumer_key"><br><br>
+    
+    Enter Consumer Secret
     <input type="text" id="consumer_secret" name="consumer_secret"><br><br>
 
     <input id="clickMe" type="button" value="Log in" onclick="doLogin();" />
 
-    <div id="replaceMe">
+    <div id="lightning">
       This will be replaced.
     </div>
+    
+    v4
   </body>
 </html>
