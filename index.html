@@ -1,12 +1,17 @@
 <script>
-  setTimeout(() => {
+  function startTheThing() {
     let params = (new URL(document.location)).searchParams;
     let code = params.get("code");
     document.getElementById("replaceMe").innerHTML = "Access code: " + code;
-  }, 2000); 
+  }; 
 </script>
 
 <h1>Lightning Out Test</h1>
+
+<input type="text" id="consumer_key" name="consumer_key"><br><br>
+<input type="text" id="consumer_secret" name="consumer_secret"><br><br>
+
+<input id="clickMe" type="button" value="clickme" onclick="startTheThing();" />
 
 <div id="replaceMe">
   This will be replaced.
