@@ -25,7 +25,7 @@
         let code = params.get("code");
         
         if (clientId !== '' && code === null) { 
-          let url = 'https://visioncare--devkpren.my.salesforce.com/services/oauth2/authorize?client_id=';
+          let url = 'https://visioncare--devkpren.sandbox.my.salesforce.com/services/oauth2/authorize?client_id=';
           url += clientId;
           url += '&redirect_uri=https%3A%2F%2Fkprenger.github.io%2FLightningOutTest&response_type=code';
         
@@ -46,7 +46,7 @@
         bodyString += clientSecret;
         bodyString += '&redirect_uri=https://kprenger.github.io/LightningOutTest';
         
-        fetch('https://visioncare--devkpren.my.salesforce.com/services/oauth2/token', {
+        fetch('https://visioncare--devkpren.sandbox.my.salesforce.com/services/oauth2/token', {
           method: 'POST',
           body: bodyString,
           headers: {
@@ -94,7 +94,7 @@
               }
             );
           },
-          'https://visioncare--devkpren.lightning.force.com/',
+          'https://visioncare--devkpren.sandbox.lightning.force.com/',
           authToken
         );
       }
@@ -130,6 +130,6 @@
     <br>
     <br>
     <br>
-    v19
+    v20
   </body>
 </html>
